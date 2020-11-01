@@ -10,7 +10,7 @@ namespace CabInvoiceGenerator
     using System.Collections.Generic;
     using System.Text;
 
-    class InvoiceException : Exception
+    public class InvoiceException : Exception
     {
         /// <summary>
         /// Enum For Exception type.

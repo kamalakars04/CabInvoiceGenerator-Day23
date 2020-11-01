@@ -4,11 +4,6 @@
 // </copyright>
 // <creator Name="Your name"/>
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="fileName.cs" company="Bridgelabz">
-//   Copyright © 2018 Company
-// </copyright>
-// <creator Name="Your name"/>
-// --------------------------------------------------------------------------------------------------------------------
 namespace CabInvoiceGenerator
 {
     using System;
@@ -22,10 +17,11 @@ namespace CabInvoiceGenerator
             List<Ride> rides = new List<Ride>();
             rides.Add(new Ride(5, 10));
             rides.Add(new Ride(5, 10));
+            InvoiceService invoiceService = new InvoiceService();
+            invoiceService.AddRides("Ram", rides);
 
             // Calculate fare for multiple rides
-            InvoiceGenerator generator = new InvoiceGenerator();
-            generator.CalculateFare(rides);
+            Console.WriteLine(invoiceService.GetInvoiceSummary("Ram").noOfRides); 
         }
     }
 }

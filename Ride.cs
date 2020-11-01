@@ -15,16 +15,17 @@ namespace CabInvoiceGenerator
         // Variables
         public double distance;
         public int time;
-
+        public readonly RideType rideType;
         /// <summary>
         /// Initializes a new instance of the <see cref="Ride"/> class.
         /// </summary>
         /// <param name="distance">The distance.</param>
         /// <param name="time">The time.</param>
-        public Ride(double distance, int time)
+        public Ride(RideType rideType, double distance, int time)
         {
             this.distance = distance;
             this.time = time;
+            this.rideType = rideType;
         }
     }
 }

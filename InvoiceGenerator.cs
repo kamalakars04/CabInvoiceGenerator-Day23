@@ -21,11 +21,23 @@ namespace CabInvoiceGenerator
         /// <summary>
         /// Initializes a new instance of the <see cref="InvoiceGenerator"/> class.
         /// </summary>
-        public InvoiceGenerator()
+        /// <param name="rideType">Type of the ride.</param>
+        public InvoiceGenerator(RideType rideType)
         {
-            COST_PER_KM = 10;
-            COST_PER_MIN = 1;
-            MIN_FARE = 5;
+           switch(rideType)
+            {
+                case RideType.NORMAL:
+                    this.COST_PER_KM = 10;
+                    this.COST_PER_MIN = 1;
+                    this.MIN_FARE = 5;
+                    break;
+
+                case RideType.PREMIUM:
+                    this.COST_PER_KM = 15;
+                    this.COST_PER_MIN = 2;
+                    this.MIN_FARE = 20;
+                    break;
+           }
         }
 
         /// <summary>
@@ -70,7 +82,9 @@ namespace CabInvoiceGenerator
         /// <returns></returns>
         public InvoiceSummary GetInvoiceSummary(List<Ride> rides)
         {
-            
+            if (rides.Count == 0)
+                return default;
+
             // Calculate total ride fare
             foreach(Ride ride in rides)
             {

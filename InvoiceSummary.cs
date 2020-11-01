@@ -59,5 +59,32 @@ namespace CabInvoiceGenerator
         {
             return this.totalFare.GetHashCode() ^ this.noOfRides.GetHashCode() ^ this.averageFarePerRide.GetHashCode();
         }
+
+        /// <summary>
+        /// Implements the operator +.
+        /// </summary>
+        /// <param name="invoiceOne">The invoice one.</param>
+        /// <param name="invoiceTwo">The invoice two.</param>
+        /// <returns>
+        /// The result of the operator.
+        /// </returns>
+        public static InvoiceSummary operator+(InvoiceSummary invoiceOne, InvoiceSummary invoiceTwo)
+        {
+            // If both the entries are null
+            if (invoiceOne == null && invoiceTwo == null)
+                throw new InvoiceException(InvoiceException.ExceptionType.NULL_RIDES, "Rides are 0");
+
+            //  if any one entry is null
+            if (invoiceOne == null)
+                return invoiceTwo;
+            if (invoiceTwo == null)
+                return invoiceOne;
+
+            // If no entry is null
+            double totalFare = invoiceOne.totalFare + invoiceTwo.totalFare;
+            int noOfRides = invoiceOne.noOfRides + invoiceTwo.noOfRides;
+            double average = totalFare / noOfRides;
+            return new InvoiceSummary(totalFare, noOfRides, average);
+        }
     }
 }

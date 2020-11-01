@@ -37,13 +37,18 @@ namespace CabInvoiceGenerator
         }
 
         /// <summary>
-        /// UC 4 Gets the invoice summary.
+        /// UC 4 Gets the total invoice summary.
         /// </summary>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        public InvoiceSummary GetInvoiceSummary(string userId)
+        public InvoiceSummary TotalInvoiceSummary(string userId)
         {
-            return new InvoiceGenerator().GetInvoiceSummary(GetAllUserRides(userId));
+            List<Ride> totalRides = GetAllUserRides(userId);
+            InvoiceSummary normalRides = new InvoiceGenerator(RideType.NORMAL).GetInvoiceSummary(
+                                                              totalRides.FindAll(ride => ride.rideType == RideType.NORMAL));
+            InvoiceSummary premiumRides = new InvoiceGenerator(RideType.PREMIUM).GetInvoiceSummary(
+                                                              totalRides.FindAll(ride => ride.rideType == RideType.PREMIUM));
+            return normalRides + premiumRides;
         }
     }
 }

@@ -10,7 +10,7 @@ namespace CabInvoiceGenerator
     using System.Collections.Generic;
     using System.Text;
 
-    public class InvoiceGenerator
+    public class InvoiceGenerator 
     {
         private readonly int COST_PER_KM;
         private readonly int COST_PER_MIN;
@@ -18,6 +18,9 @@ namespace CabInvoiceGenerator
         double rideFare;
         double averageFare;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InvoiceGenerator"/> class.
+        /// </summary>
         public InvoiceGenerator()
         {
             COST_PER_KM = 10;
@@ -61,11 +64,13 @@ namespace CabInvoiceGenerator
 
         /// <summary>
         /// UC 2, UC3 Calculates the fare.
+        /// UC 4 Refactored for UC4
         /// </summary>
         /// <param name="rides">The rides.</param>
         /// <returns></returns>
-        public InvoiceSummary CalculateFare(List<Ride> rides)
+        public InvoiceSummary GetInvoiceSummary(List<Ride> rides)
         {
+            
             // Calculate total ride fare
             foreach(Ride ride in rides)
             {

@@ -4,9 +4,10 @@ using System.Text;
 
 namespace CabInvoiceGenerator
 {
-    interface IInvoiceService
+    public interface IInvoiceService
     {
         void AddRides(string userId, List<Ride> rides);
         List<Ride> GetAllUserRides(string userId);
+        InvoiceSummary TotalInvoiceSummary(string userId);
     }
 }

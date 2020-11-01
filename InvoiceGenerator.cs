@@ -16,6 +16,7 @@ namespace CabInvoiceGenerator
         private readonly int COST_PER_MIN;
         private readonly int MIN_FARE;
         double rideFare;
+        double averageFare;
 
         public InvoiceGenerator()
         {
@@ -25,7 +26,7 @@ namespace CabInvoiceGenerator
         }
 
         /// <summary>
-        /// Calculates the fare.
+        /// UC 1 Calculates the fare.
         /// </summary>
         /// <param name="ride">The ride.</param>
         /// <returns></returns>
@@ -36,24 +37,7 @@ namespace CabInvoiceGenerator
         /// </exception>
         public double CalculateFare(Ride ride)
         {
-            // Throw exceptions for wrong values
-            if (ride.distance <= 0)
-            {
-                throw new InvoiceException(InvoiceException.ExceptionType.INVALID_DISTANCE, "Distance cannot be non positive");
-            }
-            else if (ride.time <= 0)
-            {
-                throw new InvoiceException(InvoiceException.ExceptionType.INVALID_TIME, "Time cannot be non positive");
-            }
-
-            // Calculate total fare and return it
-            rideFare = ride.distance * COST_PER_KM + ride.time * COST_PER_MIN;
-            return Math.Max(MIN_FARE, rideFare);
-        }
-
-        public double CalculateFare(List<Ride> rides)
-        {
-            foreach(Ride ride in rides)
+            try
             {
                 // Throw exceptions for wrong values
                 if (ride.distance <= 0)
@@ -64,11 +48,35 @@ namespace CabInvoiceGenerator
                 {
                     throw new InvoiceException(InvoiceException.ExceptionType.INVALID_TIME, "Time cannot be non positive");
                 }
-
-                // Calculate total fare and return it
-                rideFare += ride.distance * COST_PER_KM + ride.time * COST_PER_MIN;
             }
+            catch(NullReferenceException)
+            {
+                throw new InvoiceException(InvoiceException.ExceptionType.NULL_RIDES, "Null ride not accepted");
+            }
+
+            // Calculate total fare and return it
+            rideFare = ride.distance * COST_PER_KM + ride.time * COST_PER_MIN;
             return Math.Max(MIN_FARE, rideFare);
+        }
+
+        /// <summary>
+        /// UC 2, UC3 Calculates the fare.
+        /// </summary>
+        /// <param name="rides">The rides.</param>
+        /// <returns></returns>
+        public InvoiceSummary CalculateFare(List<Ride> rides)
+        {
+            // Calculate total ride fare
+            foreach(Ride ride in rides)
+            {
+                // Calculate total fare and return it
+                rideFare += CalculateFare(ride);
+            }
+            rideFare = Math.Max(MIN_FARE, rideFare);
+            averageFare = rideFare / rides.Count;
+
+            // Return in enhanced Summary format
+            return new InvoiceSummary(rideFare, rides.Count, averageFare);
         }
     }
 }

@@ -77,7 +77,7 @@ namespace NUnitTestCabInvoicegenerator
             rides.Add(new Ride(RideType.NORMAL, 5, 15));
 
             // Add rides using invoice service
-            InvoiceService invoiceService = new InvoiceService();
+            IInvoiceService invoiceService = new InvoiceService();
             invoiceService.AddRides("Ram", rides);
 
             // Get invoice summary for given user id
@@ -93,7 +93,7 @@ namespace NUnitTestCabInvoicegenerator
         [Test]
         public void GivenInvalidUserIdGetException()
         {
-            InvoiceService invoiceService = new InvoiceService();
+            IInvoiceService invoiceService = new InvoiceService();
 
             // Get invoice summary for given user id
             var actual = Assert.Throws<InvoiceException>(()=> invoiceService.TotalInvoiceSummary("Ram"));

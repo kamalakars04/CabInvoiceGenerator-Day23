@@ -17,7 +17,7 @@ namespace CabInvoiceGenerator
             List<Ride> rides = new List<Ride>();
             rides.Add(new Ride(RideType.NORMAL, 5, 10));
             rides.Add(new Ride(RideType.NORMAL, 5, 10));
-            InvoiceService invoiceService = new InvoiceService();
+            IInvoiceService invoiceService = new InvoiceService();
             invoiceService.AddRides("Ram", rides);
 
             // Calculate fare for multiple rides

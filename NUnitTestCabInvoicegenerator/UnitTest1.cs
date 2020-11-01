@@ -32,7 +32,7 @@ namespace NUnitTestCabInvoicegenerator
         }
 
         /// <summary>
-        /// Whens the given distance and time return fare for multiple rides.
+        /// TC 2 Whens the given distance and time return fare for multiple rides.
         /// </summary>
         [Test]
         public void WhenGivenDistanceAndTimeReturnFareForMultipleRides()
@@ -43,9 +43,26 @@ namespace NUnitTestCabInvoicegenerator
             rides.Add(new Ride(5, 15));
 
             // Calculate fare for multiple rides
-            double totalFare = generator.CalculateFare(rides);
+            double totalFare = generator.CalculateFare(rides).totalFare;
             double expected = 130;
             Assert.AreEqual(expected, totalFare);
+        }
+
+        /// <summary>
+        /// TC 3 Whens the given multiple rides get invoice summary.
+        /// </summary>
+        [Test]
+        public void WhenGivenMultipleRidesGetInvoiceSummary()
+        {
+            // Create list for multiple rides
+            List<Ride> rides = new List<Ride>();
+            rides.Add(new Ride(5, 15));
+            rides.Add(new Ride(5, 15));
+
+            // Get invoice summary for multiple rides
+            InvoiceSummary actual = generator.CalculateFare(rides);
+            InvoiceSummary expected = new InvoiceSummary(130,2,65);
+            Assert.AreEqual(expected, actual);
         }
     }
 }

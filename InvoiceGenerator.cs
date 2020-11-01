@@ -50,5 +50,25 @@ namespace CabInvoiceGenerator
             rideFare = ride.distance * COST_PER_KM + ride.time * COST_PER_MIN;
             return Math.Max(MIN_FARE, rideFare);
         }
+
+        public double CalculateFare(List<Ride> rides)
+        {
+            foreach(Ride ride in rides)
+            {
+                // Throw exceptions for wrong values
+                if (ride.distance <= 0)
+                {
+                    throw new InvoiceException(InvoiceException.ExceptionType.INVALID_DISTANCE, "Distance cannot be non positive");
+                }
+                else if (ride.time <= 0)
+                {
+                    throw new InvoiceException(InvoiceException.ExceptionType.INVALID_TIME, "Time cannot be non positive");
+                }
+
+                // Calculate total fare and return it
+                rideFare += ride.distance * COST_PER_KM + ride.time * COST_PER_MIN;
+            }
+            return Math.Max(MIN_FARE, rideFare);
+        }
     }
 }
